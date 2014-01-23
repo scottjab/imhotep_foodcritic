@@ -12,13 +12,13 @@ class FoodCritic(Tool):
     def invoke(self,
                dirname,
                filenames=set(),
-               config_file=None,
-               file_list=None):
+               config_file=None):
         retval = defaultdict(lambda: defaultdict(list))
-        if file_list is None:
+        if len(filenames) == 0:
             cmd = "find %s/cookbooks -type d -maxdepth 1 ! -path %s/cookbooks | xargs foodcritic" % (dirname, dirname)
         else:
-            cmd = "foodcritic %s" % (" ".join(file_list))
+            filenames = ["%s/%s" % (dirname, "/".join(filename.split('/')[:2])) for filename in filenames]
+            cmd = "foodcritic %s" % (" ".join(filenames))
         log.debug("Command: %s", cmd)
         try:
             output = self.executor(cmd)
