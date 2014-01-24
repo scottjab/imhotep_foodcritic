@@ -18,6 +18,7 @@ class FoodCritic(Tool):
             cmd = "find %s/cookbooks -type d -maxdepth 1 ! -path %s/cookbooks | xargs foodcritic" % (dirname, dirname)
         else:
             filenames = ["%s/%s" % (dirname, "/".join(filename.split('/')[:2])) for filename in filenames]
+            filnames = list(set(filenames))
             cmd = "foodcritic %s" % (" ".join(filenames))
         log.debug("Command: %s", cmd)
         try:
