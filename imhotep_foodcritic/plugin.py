@@ -17,7 +17,13 @@ class FoodCritic(Tool):
         if len(filenames) == 0:
             cmd = "find %s/cookbooks -type d -maxdepth 1 ! -path %s/cookbooks | xargs foodcritic" % (dirname, dirname)
         else:
-            if 'cookbooks' not in filenames:
+            found_cookbooks = False
+            for filename in filenames:
+                if 'cookbooks' in filename:
+                    log.debug('found cookbooks!')
+                    found_cookbooks = True
+                    break
+            if not found_cookbooks:
                 return retval
             filenames = ["%s/%s" % (dirname, "/".join(filename.split('/')[:2])) for filename in filenames]
             filnames = list(set(filenames))
