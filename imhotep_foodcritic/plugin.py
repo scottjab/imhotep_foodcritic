@@ -26,7 +26,7 @@ class FoodCritic(Tool):
             if not found_cookbooks:
                 return retval
             filenames = ["%s/%s" % (dirname, "/".join(filename.split('/')[:2])) for filename in filenames]
-            filnames = list(set(filenames))
+            filenames = list(set(filenames))
             cmd = "foodcritic %s" % (" ".join(filenames))
         log.debug("Command: %s", cmd)
         try:
